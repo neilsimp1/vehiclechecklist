@@ -1,0 +1,52 @@
+body{
+font-family:Arial, Helvetica, sans-serif;
+background-color:#D7EDF5;
+background:-moz-linear-gradient(45deg, #D7EDF5 16%, #8DC7CD 44%, #1A8D8E 88%, #008080 98%); 
+background:-webkit-gradient(linear, left bottom, right top, color-stop(16%, #D7EDF5), color-stop(44%, #8DC7CD), color-stop(88%, #1A8D8E), color-stop(98%, #008080)); 
+background:-webkit-linear-gradient(45deg, #D7EDF5 16%, #8DC7CD 44%, #1A8D8E 88%, #008080 98%); 
+background:-o-linear-gradient(45deg, #D7EDF5 16%, #8DC7CD 44%, #1A8D8E 88%, #008080 98%); 
+background:-ms-linear-gradient(45deg, #D7EDF5 16%, #8DC7CD 44%, #1A8D8E 88%, #008080 98%); 
+background:linear-gradient(45deg, #D7EDF5 16%, #8DC7CD 44%, #1A8D8E 88%, #008080 98%); 
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#008080', endColorstr='#D7EDF5',GradientType=1 );
+padding-top:24px;
+}
+
+nav{
+height:24px;
+background-color:#B3C4C9;
+border-bottom:1px solid #000;
+position:fixed;
+top:0;
+}
+nav h1{display:inline;}
+
+
+
+div.login{width:100%;margin:10px auto;}
+
+
+
+/* Custom, iPhone Retina */ 
+@media(min-width: 320px){
+	
+}
+
+/* Extra Small Devices, Phones */ 
+@media(min-width: 480px){
+	
+}
+
+/* Small Devices, Tablets */
+@media(min-width: 768px){
+	div.login{width:60%;
+}
+
+/* Medium Devices, Desktops */
+@media(min-width: 992px){
+	div.login{width:40%;
+}
+
+/* Large Devices, Wide Screens */
+@media(min-width: 1200px){
+	div.login{width:30%;
+}
