@@ -20,15 +20,15 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Employees <span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li><a class="link pointer" data-href="./employees">View</a></li>
-								<li><a class="link pointer" data-href="./addemployee">Add</a></li>
+								<li><a href="./employees">View</a></li>
+								<li><a href="./addemployee">Add</a></li>
 							</ul>
 						</li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Checklists <span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li><a class="link pointer" data-href="./checklists">View</a></li>
-								<li><a class="link pointer" data-href="./addchecklist">Add</a></li>
+								<li><a href="./checklists">View</a></li>
+								<li><a href="./addchecklist">Add</a></li>
 							</ul>
 						</li>
 					</ul>

@@ -1,24 +1,23 @@
 <?php
 	
-	class Employees{
+	class Lists{
 		
-		public $employees;
+		public $lists;
 
 		public function __construct(){
-		    $this->employees = [];
+		    $this->lists = [];
 		}
 
 		public function get($con){
-		    $sql_query = sql_getEmployees($con);
+		    $sql_query = sql_getLists($con);
 		    if($sql_query->execute()){
 		        $sql_query->store_result();
 		        $result = sql_get_assoc($sql_query);
 
 		        foreach($result as $row){
-		            $employee = new Employee();
-		            $employee->id = $row['USER_ID'];
-		            $employee->name = $row['USER_NAME'];
-		            $employee->un = $row['USER_UN'];
+		            $list = new List();
+		            $list->id = $row['LIST_ID'];
+		            $list->name = $row['LIST_NAME'];
 					array_push($this->employees, $employee);
 		        }
 		    }
@@ -26,17 +25,15 @@
 		}
 	}
 	
-	class Employee extends User{
+	class List{
 		
 		public $err;
-		public $lists, $completedtoday;
+		public $id, $name;
 		
 		public function __construct(){
 			parent::__construct();
-			$this->lists = [];
-			$this->completedtoday = false;
 		}
-
+		
 		
 		//public function isValid(){
 		//    if(strlen($this->username) === 0 || strlen($this->username) > 45) $this->err .= 'u';
@@ -46,7 +43,7 @@
 		//    if(strlen($this->err) > 0) return false;
 		//    return true;
 		//}
-
+		
 		//public function get($con){
 		//    $sql_query = sql_getUser($con, $this->id);
 		//    if($sql_query->execute()){
@@ -61,18 +58,18 @@
 		//    }
 		//    else die('There was an error running the query ['.$con->error.']');
 		//}
-
+		
 		//public function save($con){
 		//    $sql_query = sql_addUser($con, $this);
 		//    $sql_query->execute();
 		//    $this->id = $sql_query->insert_id;
 		//}
-
+		
 		//public function update($con){
 		//    $sql_query = sql_updateUser($con, $this);
 		//    $sql_query->execute();
 		//}
-
+		
 		//public function updatePW($con){
 		//    $sql_query = sql_updateUserPW($con, $this);
 		//    $sql_query->execute();

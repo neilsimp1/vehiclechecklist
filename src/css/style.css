@@ -7,14 +7,13 @@ background:-webkit-linear-gradient(90deg, #a6a6a6 0%, #292929 75%, #1f1f1f 100%)
 background:-o-linear-gradient(90deg, #a6a6a6 0%, #292929 75%, #1f1f1f 100%);
 background:-ms-linear-gradient(90deg, #a6a6a6 0%, #292929 75%, #1f1f1f 100%);
 background:linear-gradient(0deg, #a6a6a6 0%, #292929 75%, #1f1f1f 100%);
-filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f1f1f', endColorstr='#a6a6a6',GradientType=0);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#1f1f1f', endColorstr='#a6a6a6',GradientType=0);
 padding-top:80px;
 }
 
 
 .content{
 background-color:#a8a8a8;
-filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#808080',GradientType=1);
 border-radius:8px;
 padding:8px 20px;
 box-shadow:4px 4px 4px 4px #292929;
@@ -27,6 +26,7 @@ ul.ul li:nth-child(even){background-color:#9b9b9b;}
 ul.ul li:hover{background-color:#87ccfa;}
 
 .pointer{cursor:pointer;}
+.redhover:hover{color:#ff0000 !important;text-decoration:line-through;}
 
 /* Custom, iPhone Retina */ 
 @media(min-width: 320px){

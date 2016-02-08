@@ -1,4 +1,12 @@
-﻿<?php require_once 'includes/session.php'; ?>
+﻿<?php
+	require_once 'includes/session.php';
+	
+	if(isset($_SESSION['USER_ID']){
+		if($_SESSION['USER_GRP'] == 1){header('Location: ./employees'); exit;}
+		if($_SESSION['USER_GRP'] == 2){header('Location: ./mylists'); exit;}
+	}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,17 +25,7 @@
 </head>
 <body>
 	<?php include 'templates/navbar.php'; ?>
-		
-		<div id="wrapper">
-			
-			<?php
-				if(!isset($_SESSION['USER_ID'])) include './login.php';
-				else if($_SESSION['USER_ID'] == 1) include './employees.php';
-				else include './mylists.php';
-			?>
-
-		</div>
-		
+	<?php include 'templates/login.php'; ?>
 	<?php include 'templates/footer.php'; ?>
 </body>
 </html>

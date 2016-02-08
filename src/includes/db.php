@@ -70,6 +70,12 @@
 
         return $sql_query;
 	}
+	
+	//list
+	function sql_getLists($con){
+		$sql_query = $con->prepare("SELECT LIST_ID, LIST_NAME FROM LIST;");
 
+        return $sql_query;
+	}
 
 ?>
