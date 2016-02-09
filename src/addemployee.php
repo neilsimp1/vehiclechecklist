@@ -4,10 +4,12 @@
 	//Imports
 	require_once 'includes/db.php';
 	require_once 'includes/List.php';
+	
+	if($_SESSION['USER_GRP'] !== 1){header('Location: ./'); exit;}
 
 	$con = connect_db();
 	
-	$lists = new Lists();
+	$lists = new Checklists();
 	$lists->get($con);
 	
 	$con->close();

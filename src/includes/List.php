@@ -1,6 +1,6 @@
 <?php
 	
-	class Lists{
+	class Checklists{
 		
 		public $lists;
 
@@ -13,9 +13,9 @@
 		    if($sql_query->execute()){
 		        $sql_query->store_result();
 		        $result = sql_get_assoc($sql_query);
-
+				
 		        foreach($result as $row){
-		            $list = new List();
+		            $list = new Checklist();
 		            $list->id = $row['LIST_ID'];
 		            $list->name = $row['LIST_NAME'];
 					array_push($this->employees, $employee);
@@ -25,13 +25,13 @@
 		}
 	}
 	
-	class List{
+	class Checklist{
 		
 		public $err;
 		public $id, $name;
 		
 		public function __construct(){
-			parent::__construct();
+			
 		}
 		
 		

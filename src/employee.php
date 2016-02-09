@@ -1,10 +1,27 @@
-﻿<?php
-	require_once 'includes/session.php';
+<?php
 	
-	if(isset($_SESSION['USER_ID'])){
-		if($_SESSION['USER_GRP'] === 1){header('Location: ./employees'); exit;}
-		if($_SESSION['USER_GRP'] === 2){header('Location: ./mylists'); exit;}
-	}
+	//Imports
+	require_once 'includes/session.php';
+	require_once 'includes/db.php';
+	require_once 'includes/Employee.php';
+	require_once 'includes/List.php';
+
+	if($_SESSION['USER_GRP'] !== 1){header('Location: ./'); exit;}
+	if(!isset($_GET['_']) || !is_numeric($_GET['_'])){header('Location: ./'); exit;}
+
+	$con = connect_db();
+
+	$employee = new Employee();
+	$employee->id = intval($_GET['_']);
+	$employee->get($con);
+
+	if($employee->un == ''){header('Location: ./'); exit;}
+
+	$lists = new Checklists();
+	$lists->get($con);
+	
+	$con->close();
+
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +42,7 @@
 </head>
 <body>
 	<?php include 'templates/navbar.php'; ?>
-	<?php include 'templates/login.php'; ?>
+	<?php include 'templates/employee.php'; ?>
 	<?php include 'templates/footer.php'; ?>
 </body>
 </html>

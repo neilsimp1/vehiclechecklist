@@ -15,20 +15,25 @@
     <IncludeDebugInformation>false</IncludeDebugInformation>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="employee.php" />
     <Compile Include="css\style.css" />
     <Compile Include="addemployee.php" />
     <Compile Include="includes\db.php" />
+    <Compile Include="includes\employeeAdd.php" />
+    <Compile Include="includes\List.php" />
     <Compile Include="includes\login.php" />
     <Compile Include="includes\logout.php" />
     <Compile Include="includes\session.php" />
     <Compile Include="includes\Employee.php" />
     <Compile Include="includes\User.php" />
-    <Compile Include="js\jquery.js" />
     <Compile Include="js\script.js" />
     <Compile Include="index.php" />
     <Compile Include="employees.php" />
-    <Compile Include="login.php" />
+    <Compile Include="templates\employee.php" />
+    <Compile Include="templates\addemployee.php" />
+    <Compile Include="templates\employees.php" />
     <Compile Include="templates\footer.php" />
+    <Compile Include="templates\login.php" />
     <Compile Include="templates\navbar.php" />
   </ItemGroup>
   <ItemGroup>

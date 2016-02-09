@@ -70,7 +70,40 @@
 
         return $sql_query;
 	}
+
+	function sql_getEmployee($con, $userID){
+		$sql_query = $con->prepare("SELECT USER_NAME, USER_UN FROM USER WHERE USER_ID = ?;");
+		$sql_query->bind_param('i', $userID);
+
+        return $sql_query;
+	}
+
+	function sql_getEmployeesLists($con, $userID){
+		$sql_query = $con->prepare(
+			"SELECT LU.LIST_ID, L.LIST_NAME
+			FROM LIST_USER_JCT LU
+				LEFT JOIN LIST L ON LU.LIST_ID = L.LIST_ID
+			WHERE LU.USER_ID = ?;"
+		);
+		$sql_query->bind_param('i', $userID);
+
+        return $sql_query;
+	}
 	
+	function sql_addEmployee($con, $employee){
+        $sql_query = $con->prepare("INSERT INTO USER(USER_GRP, USER_NAME, USER_UN, USER_PW) VALUES(?,?,?,?);");
+		$sql_query->bind_param('isss', $employee->grp, $employee->name, $employee->un, $employee->pw);
+		
+		return $sql_query;
+    }
+
+	function sql_addEmployeesList($con, $employeeID, $listID){
+        $sql_query = $con->prepare("INSERT INTO LIST_USER_JCT(LIST_ID, USER_ID) VALUES(?,?);");
+		$sql_query->bind_param('ii', $listID, $employeeID);
+		
+		return $sql_query;
+    }
+
 	//list
 	function sql_getLists($con){
 		$sql_query = $con->prepare("SELECT LIST_ID, LIST_NAME FROM LIST;");

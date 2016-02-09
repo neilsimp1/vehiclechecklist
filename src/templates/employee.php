@@ -1,24 +1,12 @@
 <div class="container content">
 	
-	<h3>Add Employee</h3>
+	<h3><?php echo $employee->name; ?></h3>
 	
 	<form action="includes/employeeAdd.php" method="POST">
 		
-		<div class="form-group">
-			<label for="name" class="control-label">Name</label><br />
-			<input type="text" id="name" name="name" class="form-control" maxlength="45" placeholder="Name" required />
-		</div>
-		
-		<div class="form-group">
-			<br />
-			<label for="yn" class="control-label">Username</label><br />
-			<input type="text" id="un" name="un" class="form-control" maxlength="45" placeholder="Username" required />
-		</div>
-		
-		<div class="form-group">
-			<br />
-			<label for="pw" class="control-label">Password</label><br />
-			<input type="password" id="pw" name="pw" class="form-control" maxlength="45" placeholder="Password" required />
+		<div class="form-group">		
+			<button type="button" class="delete-employee pull-right btn btn-xs btn-danger">Delete</button>
+			<label class="control-label">Userame: </label><?php echo $employee->un; ?>
 		</div>
 		
 		<div class="form-group">
@@ -31,12 +19,21 @@
 					<option value="1">Test List 2</option>
 					<option value="3">Test List 3</option>
 					<option value="232">Test List 151</option>
-					<?php foreach($lists->lists as $list) echo '<option value="'.$list->id.'">'.$list->name.'</option>'; ?>
+					<?php
+						foreach($lists->lists as $list){
+							$hide = '';
+							foreach($employee->lists as $elist){
+								if($list->id == $elist->id) $hide = ' style="display:none;"';
+							}
+							echo '<option value="'.$list->id.'"'.$hide.'>'.$list->name.'</option>';
+						}
+					?>
 				</select>
 				<span id="addlist" class="input-group-addon btn-default pointer">Assign</span>
 			</div>
-			<ul id="ul_addlists"></ul>
-			<input type="hidden" id="listids" name="listids" />
+			<ul id="ul_addlists">
+				<?php foreach($employee->lists as $list) echo '<li class="li_addlist redhover pointer" data-id="'.$list->id.'">'.$list->name.'</li>'; ?>
+			</ul>
 		</div>
 		
 		<br /><br />
@@ -47,14 +44,21 @@
 		</div>	
 		
 	</form>
-	
+
+</div>
+
+<div style="display:none;">
+	<form action="includes/employeeDelete.php" method="POST">
+		<input type="hidden" name="id" value="<?php echo $employee->id; ?>" />
+		<button type="submit" id="delete-submit"></button>
+	</form>
 </div>
 
 <script>
 	$(document).ready(function(){
 		
 		//add checklist to ul
-		$('#addlist').on('click', function(){
+		$('#addlist').on('click', function(){	////////////////////////////TODO: pickup here, ajax to add/remove checklists, also mebbe ajax setup to do a progress indicator guy
 			var select = $I('lists');
 			if(!select.value) return;
 			var selectedOption = $(select).find('option:selected')[0];
@@ -70,16 +74,8 @@
 			$(this).remove();
 		});
 		
-		//submit enable/disable
-		$('input').on('change', function(){
-			if($I('name').value === '' || $I('un').value === '' || $I('pw').value === '') $I('addemployee-submit').disabled = true;
-			else $I('addemployee-submit').disabled = false;
-		});
-		
-		//on submit, store
-		$('form').on('submit', function(){
-			$I('listids').value = $('#ul_addlists').children().map(function(){return $(this).data('id');}).get().join(',');
-		});
-		
+		//delete
+		$('.delete-employee').on('click', function(){$('#delete-submit').click();});
+				
 	});
 </script>
