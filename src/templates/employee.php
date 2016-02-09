@@ -58,20 +58,32 @@
 	$(document).ready(function(){
 		
 		//add checklist to ul
-		$('#addlist').on('click', function(){	////////////////////////////TODO: pickup here, ajax to add/remove checklists, also mebbe ajax setup to do a progress indicator guy
+		$('#addlist').on('click', function(){
 			var select = $I('lists');
 			if(!select.value) return;
 			var selectedOption = $(select).find('option:selected')[0];
-			$('#ul_addlists').append($('<li class="li_addlist redhover pointer" data-id="' + selectedOption.value + '">' + selectedOption.innerHTML + '</li>'));
-			selectedOption.style.display = 'none';
-			select.selectedIndex = -1;
+			
+			var userID = $I('id').value, listID = selectedOption.value;
+			
+			$.post('includes/employeeAddList.php', {userID: userID, listID: listID})
+			.done(function(ret){
+				$('#ul_addlists').append($('<li class="li_addlist redhover pointer" data-id="' + listID + '">' + selectedOption.innerHTML + '</li>'));
+				selectedOption.style.display = 'none';
+				select.selectedIndex = -1;
+			})
+			.fail(function(ret){alert('There was a problem assigning the checklist: ' + ret.responseText);});			
 		});
 		
 		//remove checklist from ul
 		$(document).on('click', '.li_addlist', function(){
-			var id = $(this).data('id');
-			$('#lists option[value="' + id + '"]').css('display', 'block');
-			$(this).remove();
+			var userID = $I('id').value, listID = $(this).data('id');
+			
+			$.post('includes/employeeRemoveList.php', {userID: userID, listID: listID})
+			.done(function(ret){
+				$('#lists option[value="' + id + '"]').css('display', 'block');
+				$(this).remove();
+			})
+			.fail(function(ret){alert('There was a problem removing the checklist: ' + ret.responseText);});	
 		});
 		
 		//delete
