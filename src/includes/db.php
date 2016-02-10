@@ -15,7 +15,7 @@
 		
 		return $con;
 	}
-
+	
     function getDBConf(){
         $db_conf = [];
         $handle = fopen(!strpos(getcwd(), 'includes')? '../../protected/db_vcl': '../../../protected/db_vcl', 'r');
@@ -27,7 +27,7 @@
 
         return $db_conf;
     }
-
+	
 	function sql_get_assoc($sql_query){
 	    $meta = $sql_query->result_metadata();
 
@@ -43,10 +43,10 @@
 
 	    return $result;
 	}
-
-
-
-
+	
+	
+	
+	
 	//user
 	function sql_getUser($con, $id){
 		$sql_query = $con->prepare("SELECT USER_ID, USER_GRP, USER_NAME, USER_UN FROM USER WHERE USER_ID = ?;");
@@ -55,7 +55,7 @@
 
         return $sql_query;
 	}
-
+	
 	function sql_login_check($con, $un, $pw){
 		$sql_query = $con->prepare("SELECT USER_ID, USER_GRP, USER_NAME, USER_UN FROM USER WHERE USER_UN = ? AND USER_PW = ?;");
 
@@ -63,21 +63,22 @@
 
         return $sql_query;
 	}
-
+	
+	
 	//employee
 	function sql_getEmployees($con){
 		$sql_query = $con->prepare("SELECT USER_ID, USER_NAME, USER_UN FROM USER WHERE USER_GRP = 2;");
 
         return $sql_query;
 	}
-
+	
 	function sql_getEmployee($con, $userID){
 		$sql_query = $con->prepare("SELECT USER_NAME, USER_UN FROM USER WHERE USER_ID = ?;");
 		$sql_query->bind_param('i', $userID);
 
         return $sql_query;
 	}
-
+	
 	function sql_getEmployeesLists($con, $userID){
 		$sql_query = $con->prepare(
 			"SELECT LU.LIST_ID, L.LIST_NAME
@@ -96,19 +97,27 @@
 		
 		return $sql_query;
     }
-
+	
 	function sql_addEmployeesList($con, $employeeID, $listID){
         $sql_query = $con->prepare("INSERT INTO LIST_USER_JCT(LIST_ID, USER_ID) VALUES(?,?);");
 		$sql_query->bind_param('ii', $listID, $employeeID);
 		
 		return $sql_query;
     }
-
+	
+	function sql_deleteEmployeesList($con, $employeeID, $listID){
+		$sql_query = $con->prepare("DELETE FROM LIST_USER_JCT WHERE LIST_ID = ? AND USER_ID = ?;");
+		$sql_query->bind_param('ii', $listID, $employeeID);
+		
+		return $sql_query;
+    }
+	
+	
 	//list
 	function sql_getLists($con){
 		$sql_query = $con->prepare("SELECT LIST_ID, LIST_NAME FROM LIST;");
 
         return $sql_query;
 	}
-
+	
 ?>

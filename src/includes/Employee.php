@@ -77,6 +77,11 @@
 		    $sql_query->execute();
 		}
 		
+		public function removeList($con, $listID){
+		    $sql_query = sql_deleteEmployeesList($con, $this->id, $listID);
+		    $sql_query->execute();
+		}
+		
 	}
 	
 ?>

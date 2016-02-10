@@ -65,7 +65,7 @@
 			
 			var userID = $I('id').value, listID = selectedOption.value;
 			
-			$.post('includes/employeeAddList.php', {userID: userID, listID: listID})
+			$.post('includes/employeeListAdd.php', {userID: userID, listID: listID})
 			.done(function(ret){
 				$('#ul_addlists').append($('<li class="li_addlist redhover pointer" data-id="' + listID + '">' + selectedOption.innerHTML + '</li>'));
 				selectedOption.style.display = 'none';
@@ -78,7 +78,7 @@
 		$(document).on('click', '.li_addlist', function(){
 			var userID = $I('id').value, listID = $(this).data('id');
 			
-			$.post('includes/employeeRemoveList.php', {userID: userID, listID: listID})
+			$.post('includes/employeeListRemove.php', {userID: userID, listID: listID})
 			.done(function(ret){
 				$('#lists option[value="' + id + '"]').css('display', 'block');
 				$(this).remove();
