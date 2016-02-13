@@ -21,11 +21,13 @@
 		            $employee->id = $row['USER_ID'];
 		            $employee->name = $row['USER_NAME'];
 		            $employee->un = $row['USER_UN'];
+					$employee->lists = $row['EMPLOYEE_LISTS']? $row['EMPLOYEE_LISTS']: '<em>Nothing</em>';
 					array_push($this->employees, $employee);
 		        }
 		    }
 		    else die('There was an error running the query ['.$con->error.']');
 		}
+		
 	}
 	
 	class Employee extends User{

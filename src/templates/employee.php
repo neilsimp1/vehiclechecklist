@@ -88,6 +88,6 @@
 		
 		//delete
 		$('.delete-employee').on('click', function(){$('#delete-submit').click();});
-				
+		
 	});
 </script>

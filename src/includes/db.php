@@ -67,7 +67,17 @@
 	
 	//employee
 	function sql_getEmployees($con){
-		$sql_query = $con->prepare("SELECT USER_ID, USER_NAME, USER_UN FROM USER WHERE USER_GRP = 2;");
+		$sql_query = $con->prepare(
+			"SELECT U.USER_ID, U.USER_NAME, U.USER_UN
+				,(SELECT LTRIM(GROUP_CONCAT(' ', L.LIST_NAME)) FROM LIST L
+					WHERE L.LIST_ID IN(
+						SELECT LU.LIST_ID FROM LIST_USER_JCT LU
+                        WHERE U.USER_ID = LU.USER_ID
+					)
+				) EMPLOYEE_LISTS
+			FROM USER U
+			WHERE U.USER_GRP = 2;"
+		);
 
         return $sql_query;
 	}
