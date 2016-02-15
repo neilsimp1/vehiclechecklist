@@ -34,6 +34,7 @@
 					</ul>
 				<?php } ?>
 				<ul class="nav navbar-nav navbar-right">
+					<li><a><?php echo $_SESSION['USER_NAME']; ?></a></li>
 					<li><a href="./includes/logout.php">Logout</a></li>
 				</ul>
 			</div>
