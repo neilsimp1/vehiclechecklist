@@ -28,6 +28,15 @@ ul.ul li:hover{background-color:#87ccfa;}
 .pointer{cursor:pointer;}
 .redhover:hover{color:#ff0000 !important;text-decoration:line-through;}
 
+#loading{
+display:none;
+opacity:0.8;
+position:absolute;
+bottom:0;
+background-color:#a1d490;
+}
+#loading img{max-height:20px;margin-right:4px;}
+
 /* Custom, iPhone Retina */ 
 @media(min-width: 320px){
 	
@@ -40,15 +49,17 @@ ul.ul li:hover{background-color:#87ccfa;}
 
 /* Small Devices, Tablets */
 @media(min-width: 768px){
-	div.login{width:60%;
+	div.login{width:60%;}
+	#loading{border-top-left-radius:8px;}
+	#loading img{margin-right:15px;}
 }
 
 /* Medium Devices, Desktops */
 @media(min-width: 992px){
-	div.login{width:40%;
+	div.login{width:40%;}
 }
 
 /* Large Devices, Wide Screens */
 @media(min-width: 1200px){
-	div.login{width:30%;
+	div.login{width:30%;}
 }

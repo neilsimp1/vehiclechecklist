@@ -83,6 +83,13 @@
 		    $sql_query = sql_deleteEmployeesList($con, $this->id, $listID);
 		    $sql_query->execute();
 		}
+
+		public function delete($con){
+		    $sql_queries = sql_deleteEmployee($con, $this->id);
+			foreach($sql_queries as $sql_query){
+				if(!$sql_query->execute()) die('There was an error running the query ['.$con->error.']');
+			}
+		}
 		
 	}
 	

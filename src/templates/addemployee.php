@@ -27,10 +27,6 @@
 			<div class="input-group input-group-sm">
 				<select id="lists" class="form-control">
 					<option />
-					<option value="0">Test List</option>
-					<option value="1">Test List 2</option>
-					<option value="3">Test List 3</option>
-					<option value="232">Test List 151</option>
 					<?php foreach($lists->lists as $list) echo '<option value="'.$list->id.'">'.$list->name.'</option>'; ?>
 				</select>
 				<span id="addlist" class="input-group-addon btn-default pointer">Assign</span>
@@ -78,6 +74,7 @@
 		
 		//on submit, store
 		$('form').on('submit', function(){
+			loader(true);
 			$I('listids').value = $('#ul_addlists').children().map(function(){return $(this).data('id');}).get().join(',');
 		});
 		

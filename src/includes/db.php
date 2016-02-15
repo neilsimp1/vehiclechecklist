@@ -44,7 +44,11 @@
 	    return $result;
 	}
 	
-	
+	function refValues($arr){
+        $refs = array();
+        foreach($arr as $key => $value) $refs[$key] = &$arr[$key];
+        return $refs;
+    }
 	
 	
 	//user
@@ -122,12 +126,112 @@
 		return $sql_query;
     }
 	
+	function sql_deleteEmployee($con, $employeeID){
+		$queries = array(
+			"DELETE FROM LISTITEM_USER_JCT WHERE USER_ID = ?;"
+			,"DELETE FROM LIST_USER_JCT WHERE USER_ID = ?;"
+			,"DELETE FROM USER WHERE USER_ID = ?;"
+		);
+
+		$sql_queries = array(
+            $con->prepare($queries[0])
+            ,$con->prepare($queries[1])
+            ,$con->prepare($queries[2])
+        );
+
+		for($i = 0; $i < count($sql_queries); $i++){
+			$_employeeID = []; $types = '';
+			$qCount = substr_count($queries[$i], '?');
+			for($j = 0; $j < $qCount; $j++) array_push($_employeeID, $employeeID);
+			foreach($_employeeID as $id) $types .= 'i';
+			$_employeeID = array_merge(array($types), $_employeeID);
+			if($qCount > 0) call_user_func_array(array($sql_queries[$i], 'bind_param'), refValues($_employeeID));
+        }
+
+        return $sql_queries;
+	}
 	
-	//list
-	function sql_getLists($con){
-		$sql_query = $con->prepare("SELECT LIST_ID, LIST_NAME FROM LIST;");
+	//checklist
+	function sql_getChecklists($con){
+		$sql_query = $con->prepare(
+			"SELECT L.LIST_ID, L.LIST_NAME
+				,(SELECT COUNT(*) FROM LIST_USER_JCT LU WHERE LU.LIST_ID = L.LIST_ID) LIST_NUMASSIGNED
+			FROM LIST L;"
+		);
+
+        return $sql_query;
+	}
+
+	function sql_getChecklist($con, $listID){
+		$sql_query = $con->prepare(
+			"SELECT L.LIST_ID, L.LIST_NAME
+				,(SELECT COUNT(*) FROM LIST_USER_JCT LU WHERE LU.LIST_ID = L.LIST_ID) LIST_NUMASSIGNED
+				,(SELECT GROUP_CONCAT(' ', U.USER_NAME) FROM USER U WHERE U.USER_ID IN(
+					SELECT LU.USER_ID FROM LIST_USER_JCT LU WHERE LU.LIST_ID = L.LIST_ID
+				)) LIST_EMPLOYEES
+			FROM LIST L
+			WHERE L.LIST_ID = ?;"
+		);
+		$sql_query->bind_param('i', $listID);
+
+        return $sql_query;
+	}
+
+	function sql_addChecklist($con, $item){
+		$sql_query = $con->prepare("INSERT INTO LIST(LIST_NAME) VALUES(?);");
+		$sql_query->bind_param('s', $item->name);
+		
+		return $sql_query;
+	}
+
+	function sql_deleteChecklist($con, $listID){
+		$queries = array(
+			"DELETE FROM LISTITEM WHERE LIST_ID = ?;"
+			,"DELETE FROM LIST WHERE LIST_ID = ?;"
+		);
+
+		$sql_queries = array(
+            $con->prepare($queries[0])
+            ,$con->prepare($queries[1])
+        );
+
+		for($i = 0; $i < count($sql_queries); $i++){
+            $_listID = []; $types = '';
+            $qCount = substr_count($queries[$i], '?');
+            for($j = 0; $j < $qCount; $j++) array_push($_listID, $listID);
+            foreach($_listID as $id) $types .= 'i';
+            $_listID = array_merge(array($types), $_listID);
+            if($qCount > 0) call_user_func_array(array($sql_queries[$i], 'bind_param'), refValues($_listID));
+        }
+
+        return $sql_queries;
+	}
+	
+
+	
+	//checklistitem
+	function sql_getChecklistItems($con, $listID){
+		$sql_query = $con->prepare(
+			"SELECT LI.LISTITEM_ID, LISTITEM_DESC
+			FROM LISTITEM LI
+			WHERE LI.LIST_ID = ?;"
+		);
+		$sql_query->bind_param('i', $listID);
 
         return $sql_query;
 	}
 	
+	function sql_addChecklistItem($con, $item){
+		$sql_query = $con->prepare("INSERT INTO LISTITEM(LIST_ID, LISTITEM_DESC) VALUES(?,?);");
+		$sql_query->bind_param('is', $item->listid, $item->desc);
+		
+		return $sql_query;
+	}
+
+	function sql_deleteChecklistItem($con, $itemID){
+		$sql_query = $con->prepare("DELETE FROM LISTITEM WHERE LISTITEM_ID = ?;");
+		$sql_query->bind_param('i', $itemID);
+		
+		return $sql_query;
+	}
 ?>

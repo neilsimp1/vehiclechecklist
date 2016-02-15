@@ -15,12 +15,23 @@
     <IncludeDebugInformation>false</IncludeDebugInformation>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="addchecklist.php" />
+    <Compile Include="checklist.php" />
     <Compile Include="employee.php" />
     <Compile Include="css\style.css" />
     <Compile Include="addemployee.php" />
+    <Compile Include="checklists.php" />
+    <Compile Include="includes\ChecklistItem.php" />
     <Compile Include="includes\db.php" />
+    <Compile Include="includes\employeeDelete.php" />
+    <Compile Include="includes\listAdd.php" />
     <Compile Include="includes\employeeAdd.php" />
-    <Compile Include="includes\List.php" />
+    <Compile Include="includes\listDelete.php" />
+    <Compile Include="includes\listItemDelete.php" />
+    <Compile Include="includes\listItemAdd.php" />
+    <Compile Include="includes\employeeListAdd.php" />
+    <Compile Include="includes\employeeListRemove.php" />
+    <Compile Include="includes\Checklist.php" />
     <Compile Include="includes\login.php" />
     <Compile Include="includes\logout.php" />
     <Compile Include="includes\session.php" />
@@ -29,8 +40,11 @@
     <Compile Include="js\script.js" />
     <Compile Include="index.php" />
     <Compile Include="employees.php" />
+    <Compile Include="templates\addchecklist.php" />
+    <Compile Include="templates\checklist.php" />
     <Compile Include="templates\employee.php" />
     <Compile Include="templates\addemployee.php" />
+    <Compile Include="templates\checklists.php" />
     <Compile Include="templates\employees.php" />
     <Compile Include="templates\footer.php" />
     <Compile Include="templates\login.php" />

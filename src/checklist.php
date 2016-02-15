@@ -3,22 +3,19 @@
 	//Imports
 	require_once 'includes/session.php';
 	require_once 'includes/db.php';
-	require_once 'includes/Employee.php';
 	require_once 'includes/Checklist.php';
+	require_once 'includes/ChecklistItem.php';
 
 	if($_SESSION['USER_GRP'] !== 1){header('Location: ./'); exit;}
 	if(!isset($_GET['_']) || !is_numeric($_GET['_'])){header('Location: ./'); exit;}
 
 	$con = connect_db();
 
-	$employee = new Employee();
-	$employee->id = intval($_GET['_']);
-	$employee->get($con);
+	$list = new Checklist();
+	$list->id = intval($_GET['_']);
+	$list->get($con);
 
-	if($employee->un == ''){header('Location: ./'); exit;}
-
-	$lists = new Checklists();
-	$lists->get($con);
+	if($list->name == ''){header('Location: ./'); exit;}
 	
 	$con->close();
 
@@ -42,7 +39,7 @@
 </head>
 <body>
 	<?php include 'templates/navbar.php'; ?>
-	<?php include 'templates/employee.php'; ?>
+	<?php include 'templates/checklist.php'; ?>
 	<?php include 'templates/footer.php'; ?>
 </body>
 </html>
