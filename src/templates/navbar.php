@@ -2,7 +2,7 @@
 	<div class="container-fluid">
 		
 		<div class="navbar-header">
-			<?php if(isset($_SESSION['USER_ID']) && $_SESSION['USER_GRP'] == 1){ ?>
+			<?php if(isset($_SESSION['USER_ID'])){ ?>
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
 					<span class="sr-only">Toggle navigation</span>
 					<span class="icon-bar"></span>
@@ -10,7 +10,7 @@
 					<span class="icon-bar"></span>
 				</button>
 			<?php } ?>
-			<a class="navbar-brand" href="#">Vehicle Checklist</a>
+			<a class="navbar-brand" href="./">Vehicle Checklist</a>
 		</div>
 		
 		<?php if(isset($_SESSION['USER_ID'])){ ?>
@@ -31,6 +31,11 @@
 								<li><a href="./addchecklist">Add</a></li>
 							</ul>
 						</li>
+					</ul>
+				<?php } ?>
+				<?php if($_SESSION['USER_GRP'] == 2){ ?>
+					<ul class="nav navbar-nav">
+						<li><a href="./mylists">My Checklists</a></li>
 					</ul>
 				<?php } ?>
 				<ul class="nav navbar-nav navbar-right">

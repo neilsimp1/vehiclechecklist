@@ -24,6 +24,9 @@ ul.ul li{margin-bottom:8px;font-size:0.9em;padding:4px;border-radius:4px;cursor:
 ul.ul li:nth-child(odd){background-color:#808080;}
 ul.ul li:nth-child(even){background-color:#9b9b9b;}
 ul.ul li:hover{background-color:#87ccfa;}
+ul.ul-nopointer li{cursor:default;}
+
+.bigger{font-size:1.2em;font-weight:bold;}
 
 .pointer{cursor:pointer;}
 .redhover:hover{color:#ff0000 !important;text-decoration:line-through;}

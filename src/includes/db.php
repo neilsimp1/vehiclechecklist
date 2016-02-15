@@ -152,12 +152,16 @@
 	}
 	
 	//checklist
-	function sql_getChecklists($con){
+	function sql_getChecklists($con, $userID){
 		$sql_query = $con->prepare(
 			"SELECT L.LIST_ID, L.LIST_NAME
 				,(SELECT COUNT(*) FROM LIST_USER_JCT LU WHERE LU.LIST_ID = L.LIST_ID) LIST_NUMASSIGNED
-			FROM LIST L;"
+			FROM LIST L
+				LEFT JOIN LIST_USER_JCT LU ON L.LIST_ID = LU.LIST_ID
+			WHERE LU.USER_ID LIKE ?;"
 		);
+
+		$sql_query->bind_param('s', $userID);
 
         return $sql_query;
 	}
@@ -180,6 +184,17 @@
 	function sql_addChecklist($con, $item){
 		$sql_query = $con->prepare("INSERT INTO LIST(LIST_NAME) VALUES(?);");
 		$sql_query->bind_param('s', $item->name);
+		
+		return $sql_query;
+	}
+
+	function sql_checkChecklistItem($con, $item){
+		$sql_query = $con->prepare(
+			"INSERT INTO LISTITEM_USER_JCT(LISTITEM_ID, USER_ID, LISTITEM_DONE, LISTITEM_DTE)
+			VALUES(?,?,?,?)
+			ON DUPLICATE KEY UPDATE LISTITEM_DONE = ?;"
+		);
+		$sql_query->bind_param('iiisi', $item->id, $item->userid, $item->done, $item->date, $item->done);
 		
 		return $sql_query;
 	}
@@ -210,13 +225,15 @@
 
 	
 	//checklistitem
-	function sql_getChecklistItems($con, $listID){
-		$sql_query = $con->prepare(
-			"SELECT LI.LISTITEM_ID, LISTITEM_DESC
-			FROM LISTITEM LI
-			WHERE LI.LIST_ID = ?;"
-		);
-		$sql_query->bind_param('i', $listID);
+	function sql_getChecklistItems($con, $list){
+		$queryStr = "SELECT LI.LISTITEM_ID, LISTITEM_DESC ";
+		if(isset($list->userid)) $queryStr.= ",(SELECT LUJ.LISTITEM_DONE FROM LISTITEM_USER_JCT LUJ WHERE LUJ.LISTITEM_ID = LI.LISTITEM_ID AND LUJ.USER_ID = ? AND LUJ.LISTITEM_DTE = ?) LISTITEM_DONE ";
+		$queryStr .= "FROM LISTITEM LI WHERE LI.LIST_ID = ?;";
+		
+		$sql_query = $con->prepare($queryStr);
+
+		if(isset($list->userid)) $sql_query->bind_param('iss', $list->userid, $list->date, $list->id);
+		else $sql_query->bind_param('i', $list->id);
 
         return $sql_query;
 	}

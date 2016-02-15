@@ -1,34 +1,9 @@
 <?php
 	
-	//class ChecklistItems{
-		
-	//    public $listid, $items;
-
-	//    public function __construct(){
-	//        $this->items = [];
-	//    }
-
-	//    public function get($con){
-	//        $sql_query = sql_getChecklistItems($con, $this->listid);
-	//        if($sql_query->execute()){
-	//            $sql_query->store_result();
-	//            $result = sql_get_assoc($sql_query);
-				
-	//            foreach($result as $row){
-	//                $item = new ChecklistItem();
-	//                $item->id = $row['LISTITEM_ID'];
-	//                $item->desc = $row['LISTITEM_DESC'];
-	//                array_push($this->items, $item);
-	//            }
-	//        }
-	//        else die('There was an error running the query ['.$con->error.']');
-	//    }
-	//}
-	
 	class ChecklistItem{
 		
 		public $err;
-		public $id, $listid, $desc;
+		public $id, $listid, $desc, $donetoday, $date, $done;
 		
 		public function __construct(){
 			
@@ -40,6 +15,12 @@
 		    $this->id = $sql_query->insert_id;
 		}
 		
+		public function check($con){
+		    $sql_query = sql_checkChecklistItem($con, $this);
+		    $sql_query->execute();
+		    $this->id = $sql_query->insert_id;
+		}
+
 		public function delete($con){
 		    $sql_query = sql_deleteChecklistItem($con, $this->id);
 		    $sql_query->execute();

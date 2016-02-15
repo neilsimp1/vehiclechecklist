@@ -2,14 +2,15 @@
 	
 	class Checklists{
 		
-		public $lists;
+		public $userid, $date, $lists;
 
 		public function __construct(){
 		    $this->lists = [];
 		}
 
 		public function get($con){
-		    $sql_query = sql_getChecklists($con);
+			$userID = isset($this->userid)? $this->userid: '%';
+		    $sql_query = sql_getChecklists($con, $userID);
 		    if($sql_query->execute()){
 		        $sql_query->store_result();
 		        $result = sql_get_assoc($sql_query);
@@ -23,6 +24,10 @@
 		        }
 		    }
 		    else die('There was an error running the query ['.$con->error.']');
+
+			if(isset($this->userid)){
+				
+			}
 		}
 	}
 	
@@ -87,7 +92,7 @@
 					$this->numassigned = $row['LIST_NUMASSIGNED'];
 					$this->employees = $row['LIST_EMPLOYEES'];
 
-					$sql_query = sql_getChecklistItems($con, $this->id);
+					$sql_query = sql_getChecklistItems($con, $this);
 					if($sql_query->execute()){
 						$sql_query->store_result();
 						$result = sql_get_assoc($sql_query);
@@ -95,6 +100,9 @@
 							$item = new ChecklistItem();
 							$item->id = $row['LISTITEM_ID'];
 							$item->desc = $row['LISTITEM_DESC'];
+							if(isset($this->userid)){
+								$item->done = $row['LISTITEM_DONE'];
+							}
 							array_push($this->items, $item);
 						}
 					}

@@ -8,7 +8,7 @@
 			echo '<ul class="ul">';
 			foreach($employees->employees as $employee){ ?>
 				<li data-id="<?php echo $employee->id; ?>">
-					<span>Name: <?php echo $employee->name; ?></span><br />
+					<span class="bigger"><?php echo $employee->name; ?></span><br />
 					<span>Username: <?php echo $employee->un; ?></span><br /><br />
 					<span>Completed Today: <?php echo $employee->completedtoday? 'Yes': 'Nope'; ?></span><br />
 					<span>Assigned to: <?php echo $employee->lists; ?></span>
