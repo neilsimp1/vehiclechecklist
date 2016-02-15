@@ -10,7 +10,7 @@
 					<span class="icon-bar"></span>
 				</button>
 			<?php } ?>
-			<a class="navbar-brand" href="./">Vehicle Checklist</a>
+			<a class="navbar-brand" href="./">Exxpress Tire Delivery - Vehicle Checklist</a>
 		</div>
 		
 		<?php if(isset($_SESSION['USER_ID'])){ ?>
