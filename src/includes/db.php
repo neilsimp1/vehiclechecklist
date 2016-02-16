@@ -79,10 +79,12 @@
                         WHERE U.USER_ID = LU.USER_ID
 					)
 				) EMPLOYEE_LISTS
+				,CONCAT(ROUND(((SELECT COUNT(*) FROM LISTITEM_USER_JCT LUJ WHERE LUJ.USER_ID = U.USER_ID AND LUJ.LISTITEM_DTE = '".date('Y-m-d')."')) /
+					(SELECT COUNT(*) FROM LISTITEM LI WHERE LI.LIST_ID IN(SELECT LU.LIST_ID FROM LIST_USER_JCT LU WHERE LU.USER_ID = U.USER_ID)) * 100, 0), '%') EMPLOYEE_COMPLETEDTODAY
 			FROM USER U
 			WHERE U.USER_GRP = 2;"
 		);
-
+		
         return $sql_query;
 	}
 	
@@ -93,14 +95,16 @@
         return $sql_query;
 	}
 	
-	function sql_getEmployeesLists($con, $userID){
+	function sql_getEmployeesLists($con, $userID, $date){
 		$sql_query = $con->prepare(
 			"SELECT LU.LIST_ID, L.LIST_NAME
+				,(SELECT LUJ.LISTITEM_DONE FROM LISTITEM_USER_JCT LUJ WHERE LUJ.LIST_ID = LI.LIST_ID AND LUJ.USER_ID = LU.USER_ID AND LUJ.LISTITEM_DTE = ?) LISTITEM_DONE
 			FROM LIST_USER_JCT LU
 				LEFT JOIN LIST L ON LU.LIST_ID = L.LIST_ID
 			WHERE LU.USER_ID = ?;"
 		);
-		$sql_query->bind_param('i', $userID);
+
+		$sql_query->bind_param('si', $date, $userID);
 
         return $sql_query;
 	}
@@ -154,14 +158,16 @@
 	//checklist
 	function sql_getChecklists($con, $userID){
 		$sql_query = $con->prepare(
-			"SELECT L.LIST_ID, L.LIST_NAME
-				,(SELECT COUNT(*) FROM LIST_USER_JCT LU WHERE LU.LIST_ID = L.LIST_ID) LIST_NUMASSIGNED
-			FROM LIST L
-				LEFT JOIN LIST_USER_JCT LU ON L.LIST_ID = LU.LIST_ID
-			WHERE LU.USER_ID LIKE ?;"
+			"SELECT LU.LIST_ID, L.LIST_NAME
+				,(SELECT LUJ.LISTITEM_DONE FROM LISTITEM_USER_JCT LUJ WHERE LUJ.LISTITEM_ID IN(
+					SELECT LU.LIST_ID FROM LIST_USER_JCT LU WHERE LU.USER_ID = ?
+                ) AND LUJ.USER_ID = LU.USER_ID AND LUJ.LISTITEM_DTE = '2016-02-16') LISTITEM_DONE
+			FROM LIST_USER_JCT LU
+				LEFT JOIN LIST L ON LU.LIST_ID = L.LIST_ID
+			WHERE LU.USER_ID = ?;"
 		);
 
-		$sql_query->bind_param('s', $userID);
+		$sql_query->bind_param('ss', $userID, $userID);
 
         return $sql_query;
 	}

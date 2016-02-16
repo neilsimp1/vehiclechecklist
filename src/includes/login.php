@@ -40,7 +40,7 @@
 	$_SESSION['USER_NAME'] = $user->name;
 	$_SESSION['USER_UN'] = $user->un;
 	
-	if($user->grp == 1)	header('Location: ../employees');
+	if($user->grp == 1)	header('Location: ../report');
 	else if($user->grp == 2) header('Location: ../mylists');
 	else header('Location: ../');
 	

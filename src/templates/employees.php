@@ -10,7 +10,7 @@
 				<li data-id="<?php echo $employee->id; ?>">
 					<span class="bigger"><?php echo $employee->name; ?></span><br />
 					<span>Username: <?php echo $employee->un; ?></span><br /><br />
-					<span>Completed Today: <?php echo $employee->completedtoday? 'Yes': 'Nope'; ?></span><br />
+					<span>Completed Today: <?php echo $employee->completedtoday; ?></span><br />
 					<span>Assigned to: <?php echo $employee->lists; ?></span>
 				</li>
 			<?php }

@@ -17,6 +17,7 @@
 			<div class="collapse navbar-collapse" id="navbar">
 				<?php if($_SESSION['USER_GRP'] == 1){ ?>
 					<ul class="nav navbar-nav">
+						<li><a href="./report">Report</a></li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Employees <span class="caret"></span></a>
 							<ul class="dropdown-menu">
