@@ -51,6 +51,14 @@
 					}
 					else die('There was an error running the query ['.$con->error.']');
 					
+					$completedToday = true;
+					foreach($employee->lists as $list){
+						foreach($list->items as $item){
+							if(!$item->done) $completedToday = false;
+						}
+					}
+					$employee->completedtoday = $completedToday? 'Yep': 'Nope';
+
 					array_push($this->employees, $employee);
 		        }
 		    }
