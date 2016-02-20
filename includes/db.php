@@ -24,7 +24,7 @@
             fclose($handle);
         }
         else die('Unable to get database credentials');
-
+		
         return $db_conf;
     }
 	
@@ -100,10 +100,10 @@
 			"SELECT LU.LIST_ID, L.LIST_NAME
 			FROM LIST_USER_JCT LU
 				LEFT JOIN LIST L ON LU.LIST_ID = L.LIST_ID
-			WHERE LU.USER_ID = ?;"
+			WHERE LU.USER_ID LIKE ?;"
 		);
 
-		$sql_query->bind_param('i', $userID);
+		$sql_query->bind_param('s', $userID);
 
         return $sql_query;
 	}
@@ -156,11 +156,23 @@
 	
 	//checklist
 	function sql_getChecklists($con, $userID){
-		$sql_query = $con->prepare(
-			"SELECT L.LIST_ID, L.LIST_NAME
-				,(SELECT COUNT(*) FROM LIST_USER_JCT LU WHERE LU.LIST_ID = L.LIST_ID) LIST_NUMASSIGNED
-			FROM LIST L;"
-		);
+		if($userID === '%'){
+			$sql_query = $con->prepare(
+				"SELECT L.LIST_ID, L.LIST_NAME
+					,(SELECT COUNT(*) FROM LIST_USER_JCT LU WHERE LU.LIST_ID = L.LIST_ID) LIST_NUMASSIGNED
+				FROM LIST L;"
+			);
+		}
+		else{
+			$sql_query = $con->prepare(
+				"SELECT LU.LIST_ID, L.LIST_NAME
+				FROM LIST_USER_JCT LU
+					LEFT JOIN LIST L ON LU.LIST_ID = L.LIST_ID
+				WHERE LU.USER_ID = ?;"
+			);
+
+			$sql_query->bind_param('i', $userID);
+		}
 
         return $sql_query;
 	}
