@@ -19,6 +19,7 @@
 		            $list = new Checklist();
 		            $list->id = $row['LIST_ID'];
 		            $list->name = $row['LIST_NAME'];
+					$list->numassigned = $row['LIST_NUMASSIGNED'];
 					array_push($this->lists, $list);
 		        }
 		    }

@@ -21,7 +21,7 @@
 		            $employee->name = $row['USER_NAME'];
 		            $employee->un = $row['USER_UN'];
 
-					$sql_query = sql_getChecklists($con, $employee->id);
+					$sql_query = sql_getEmployeesLists($con, $employee->id);
 					if($sql_query->execute()){
 						$sql_query->store_result();
 						$result = sql_get_assoc($sql_query);
