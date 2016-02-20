@@ -18,7 +18,7 @@
 	
     function getDBConf(){
         $db_conf = [];
-        $handle = fopen(!strpos(getcwd(), 'includes')? '../../protected/db_vcl': '../../../protected/db_vcl', 'r');
+        $handle = fopen(!strpos(getcwd(), 'includes')? '../protected/db_vcl': '../../protected/db_vcl', 'r');
         if($handle){
             while(($line = fgets($handle)) !== false) array_push($db_conf, rtrim($line));
             fclose($handle);
@@ -232,12 +232,12 @@
 	
 	//checklistitem
 	function sql_getChecklistItems($con, $list){
-		$queryStr = "SELECT LI.LISTITEM_ID, LISTITEM_DESC ";
+		$queryStr = "SELECT LI.LISTITEM_ID, LI.LISTITEM_DESC ";
 		if(isset($list->userid)) $queryStr.= ",(SELECT LUJ.LISTITEM_DONE FROM LISTITEM_USER_JCT LUJ WHERE LUJ.LISTITEM_ID = LI.LISTITEM_ID AND LUJ.USER_ID = ? AND LUJ.LISTITEM_DTE = ?) LISTITEM_DONE ";
 		$queryStr .= "FROM LISTITEM LI WHERE LI.LIST_ID = ?;";
 		
 		$sql_query = $con->prepare($queryStr);
-
+		
 		if(isset($list->userid)) $sql_query->bind_param('iss', $list->userid, $list->date, $list->id);
 		else $sql_query->bind_param('i', $list->id);
 

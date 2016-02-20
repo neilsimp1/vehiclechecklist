@@ -33,7 +33,7 @@
 	class Checklist{
 		
 		public $err;
-		public $id, $name, $items, $numassigned, $employees;
+		public $id, $name, $items, $numassigned, $employees, $date;
 		
 		public function __construct(){
 			$this->items = [];

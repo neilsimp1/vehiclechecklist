@@ -11,6 +11,7 @@
 	$con = connect_db();
 	
 	$report = new Report();
+	$report->date = date('Y-m-d');
 	$report->get($con);
 	
 	$con->close();

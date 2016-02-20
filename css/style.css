@@ -26,11 +26,12 @@ ul.ul li:nth-child(even){background-color:#9b9b9b;}
 ul.ul li:hover{background-color:#87ccfa;}
 ul.ul-nopointer li{cursor:default;}
 
-.bigger{font-size:1.2em;font-weight:bold;}
+.bigger{font-size:1.2em;}
 
 .pointer{cursor:pointer;}
 .redhover:hover{color:#ff0000 !important;text-decoration:line-through;}
 .strike{text-decoration:line-through;}
+.font-italic{font-style:italic;}
 
 #loading{
 display:none;
@@ -40,6 +41,19 @@ bottom:0;
 background-color:#a1d490;
 }
 #loading img{max-height:20px;margin-right:4px;}
+
+ul.report{padding:0 0 0 1%;margin:0;}
+ul.report li{font-size:1.2em;cursor:pointer;list-style:none;}
+ul.report li:nth-child(odd){background-color:#a09e9e;}
+ul.report li span.bigger:hover{font-weight:bold;}
+ul.report li:before{margin-right:4px;font-weight:normal;}
+ul.report li.report-closed:before{content:"+";}
+ul.report li.report-open:before{content:"-";}
+ul.report li ul li{display:none;font-size:1em;}
+ul.report span{display:inline;}
+.emp-completedtoday{font-weight:normal;}
+
+
 
 /* Custom, iPhone Retina */ 
 @media(max-width: 320px){

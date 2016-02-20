@@ -6,18 +6,18 @@
 	<?php
 		if(count($report->employees) === 0) echo '<div class="text-center">No employees found</div>';
 		else{
-			echo '<ul>';
+			echo '<ul class="report">';
 			foreach($report->employees as $employee){ ?>
-				<li>
-					<span class="bigger"><?php echo $employee->name; ?></span><br />
-					<span>Completed Today: <?php echo $employee->completedtoday; ?></span><br />
+				<li class="report-closed" data-showtype="list">
+					<span class="bigger expander"><?php echo $employee->name; ?></span><br />
+					<span class="emp-completedtoday">Completed Today: <?php echo $employee->completedtoday; ?></span><br />
 					<ul>
 						<?php foreach($employee->lists as $list){ ?>
-							<li>
-								<span><?php echo $list->name; ?></span>
+							<li class="report-closed list" data-showtype="item">
+								<span class="bigger expander"><?php echo $list->name; ?></span>
 								<ul>
 									<?php foreach($list->items as $item){ ?>
-										<li <?php if($item->done) echo 'class="strike"'; ?>><?php echo $item->desc; ?></li>
+										<li class="item<?php if($item->done) echo ' strike font-italic'; ?>"><?php echo $item->desc; ?></li>
 									<?php } ?>
 								</ul>
 							</li>
@@ -34,8 +34,17 @@
 <script>
 	$(document).ready(function(){
 		
-		$('ul.ul li').on('click', function(){
-			window.location = './employee?_=' + $(this).data('id');
+		$('.expander').on('click', function(){
+			var li = this.parentNode;
+			var showtype = $(li).data('showtype');
+			if(li.className.indexOf('closed') !== -1){
+				$(li).find('ul li.' + showtype).slideDown(200);
+				li.className = li.className.replace('closed', 'open');
+			}
+			else{
+				$(li).find('ul li.' + showtype).slideUp(200);
+				li.className = li.className.replace('open', 'closed');
+			}
 		});
 		
 	});

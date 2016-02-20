@@ -3,7 +3,7 @@
 	class Report{
 		
 		public $err;
-		public $employees;
+		public $employees, $date;
 		
 		public function __construct(){
 			$this->employees = [];
@@ -30,6 +30,7 @@
 							$list = new Checklist();
 							$list->id = $row['LIST_ID'];
 							$list->name = $row['LIST_NAME'];
+							$list->date = $this->date;
 							$list->userid = $employee->id;
 
 							$sql_query = sql_getChecklistItems($con, $list);
